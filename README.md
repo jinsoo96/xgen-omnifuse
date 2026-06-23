@@ -116,6 +116,19 @@ works on **any** SPARQL 1.1 store — not just jena-text.
 - reranker / cross-encoder hook, query expansion
 - configurable ISA predicates and prompt templates (per domain/language)
 
+## CI / Releasing
+
+- `ci.yml` — runs pytest (3.10–3.12) + `python -m build` + `twine check` on every push/PR.
+- `publish.yml` — on a GitHub **Release**, builds and uploads to PyPI via **Trusted Publishing**
+  (no token in the repo). One-time PyPI setup: project → *Publishing* → add pending publisher
+  `PlateerLab / xgen-omnifuse / publish.yml / pypi`. (Token mode: add `secrets.PYPI_API_TOKEN`.)
+
+Build locally:
+
+```bash
+pip install build && python -m build      # dist/*.tar.gz + *.whl
+```
+
 ## License
 
 TBD.
