@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.0
+
+- Replaced `Memory` (remember/recall) with **`Vault`** — an omnifuse-native memory:
+  - `fuse(text=, facts=)` write / `surface(query)` read (on-brand verbs, not generic remember/recall).
+  - **fuse-on-write**: facts deduped & entities coreferenced by label (knowledge merges, not piles).
+  - **salience**: each fuse/surface bumps node salience; `surface()` re-ranks results by it (no PPR/Hebbian).
+  - `save()/load()` JSONL incl. salience; incremental label set (no per-write re-derivation).
+- **Breaking**: `Memory`/`remember`/`recall` removed (the lib is pre-1.0; no released users relied on it).
+
 ## 0.3.0
 
 - `Memory` — a growing store built on OmniFuse search. `remember()` facts/notes over time,

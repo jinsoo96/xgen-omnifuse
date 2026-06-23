@@ -129,19 +129,20 @@ works on **any** SPARQL 1.1 store — not just jena-text.
 - reranker / cross-encoder hook, query expansion
 - configurable ISA predicates and prompt templates (per domain/language)
 
-## Memory (remember / recall)
+## Vault — fuse / surface (omnifuse-native memory)
 
-A growing store built on the same fusion search — `remember()` facts & notes over time,
-`recall()` pulls them back. Zero infra; notes auto-link to known entities; persists to JSONL.
+A growing knowledge store with two omnifuse-specific dynamics, not a generic remember/recall:
+**fuse-on-write** (facts deduped & merged by entity) and **salience** (frequently fused/surfaced
+nodes rank higher). Zero infra; notes auto-link to known entities; persists to JSONL.
 
 ```python
-from omnifuse import Memory
+from omnifuse import Vault
 
-m = Memory()
-m.add_fact("담보", "instanceOf", "규정")
-m.remember("담보 한도는 5억원이다", triples=[("담보", "한도", "5억")])
-print(m.recall("담보 한도").answer)     # fusion search over everything remembered
-m.save("mem.jsonl"); m2 = Memory.load("mem.jsonl")
+v = Vault()
+v.fuse(facts=[("담보", "instanceOf", "규정")])
+v.fuse("담보 한도는 5억원이다", facts=[("담보", "한도", "5억")])
+print(v.surface("담보 한도").answer)     # fusion search over everything fused, salience-ranked
+v.save("vault.jsonl"); v2 = Vault.load("vault.jsonl")
 ```
 
 ## CI / Releasing
